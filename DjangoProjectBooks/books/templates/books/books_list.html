@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #555;
+            margin-top: 30px;
+        }
+        .book-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .book-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .book-details {
+            margin-top: 10px;
+            color: #666;
+        }
+        .genre-item, .author-item {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        .list {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Books Library</h1>
+        
+        <h2>Books</h2>
+        {% if books %}
+            {% for book in books %}
+                <div class="book-item">
+                    <div class="book-title">{{ book.title }}</div>
+                    <div class="book-details">
+                        <strong>Author:</strong> {{ book.author.name }}<br>
+                        <strong>Genre:</strong> {{ book.genre.name }}<br>
+                        {% if book.published_date %}
+                            <strong>Published:</strong> {{ book.published_date }}<br>
+                        {% endif %}
+                        {% if book.isbn %}
+                            <strong>ISBN:</strong> {{ book.isbn }}<br>
+                        {% endif %}
+                        {% if book.description %}
+                            <strong>Description:</strong> {{ book.description }}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No books available yet.</p>
+        {% endif %}
+        
+        <h2>Genres</h2>
+        <div class="list">
+            {% if genres %}
+                {% for genre in genres %}
+                    <span class="genre-item">{{ genre.name }}</span>
+                {% endfor %}
+            {% else %}
+                <p>No genres available yet.</p>
+            {% endif %}
+        </div>
+        
+        <h2>Authors</h2>
+        <div class="list">
+            {% if authors %}
+                {% for author in authors %}
+                    <span class="author-item">{{ author.name }}</span>
+                {% endfor %}
+            {% else %}
+                <p>No authors available yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
