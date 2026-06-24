@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Todo List</h1>
+        <div class="todo-list">
+            {% for todo in todos %}
+            <div class="todo-card">
+                <h2 class="todo-name">{{ todo.name }}</h2>
+                <p class="todo-description">{{ todo.description }}</p>
+                <div class="todo-meta">
+                    <span class="todo-status status-{{ todo.completed }}">
+                        {{ todo.completed }}
+                    </span>
+                    <span class="todo-date">{{ todo.created_at }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
