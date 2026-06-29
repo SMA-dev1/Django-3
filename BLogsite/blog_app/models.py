@@ -4,13 +4,13 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 
-class PublishedManger(models.Manager):
+class PublishedManager(models.Manager):
     def get_queryset(self):
-        return super(PublishedManger, self).get_queryset().filter(status='published')
+        return super(PublishedManager, self).get_queryset().filter(status='published')
 
 
 class Post(models.Model):
-    STATUS = (
+    STATUS_CHOICES = (
         ('draft', 'Draft'),
         ('published', 'Published'),
     )
@@ -22,19 +22,20 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=10,
-                              choices=STATUS,
+                              choices=STATUS_CHOICES,
                               default='draft')
-    class Meta:
-        ordering = ['-publish']
 
-    def get_absolute_url(self):
-        return reverse('blog_app:post_detail', args=[self.publish.year,
-                                                 self.publish.month,
-                                                 self.publish.day,
-                                                 self.slug])
+    class Meta:
+        ordering = ('-publish',)
 
     def __str__(self):
         return self.title
 
-    objects = PublishedManger()
-    published = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
+    published = PublishedManager()
+
+    def get_absolute_url(self):
+        return reverse('blog_app:post_detail',
+                       args=[self.publish.year,
+                             self.publish.month,
+                             self.publish.day, self.slug])
